@@ -5,6 +5,7 @@ import com.netcracker.person.Gender;
 import com.netcracker.person.Person;
 import com.netcracker.repository.Repository;
 import com.netcracker.utils.comparators.ContractIdComparator;
+import com.netcracker.utils.reflection.InjectionException;
 import com.netcracker.utils.reflection.Injector;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
@@ -49,7 +50,7 @@ class RepositoryTest {
 
 
     @Test
-    void sort() throws IllegalAccessException {
+    void sort() throws IllegalAccessException, InjectionException {
         Injector injector = new Injector();
         injector.inject(testRepository);
         System.out.println(testRepository.toString());

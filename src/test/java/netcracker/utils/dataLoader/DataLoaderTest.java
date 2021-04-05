@@ -5,7 +5,7 @@ import com.netcracker.utils.reflection.InjectionException;
 import com.netcracker.utils.reflection.Injector;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;

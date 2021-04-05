@@ -76,13 +76,6 @@ public class DataLoader {
      * @throws IOException
      */
     public Repository readAll (Reader reader) throws IOException, ClassNotFoundException {
-//        validators.add(new ContractDateValidator());
-//        validators.add(new ContractIdValidator());
-//        validators.add(new MobileContractValidate());
-//        validators.add(new TelevisionContractValidate());
-//        validators.add(new ContractNumberValidator());
-//        validators.add(new PersonAgeValidator());
-//        validators.add(new InternetContractValidator());
 
         csvReader = new CSVReaderBuilder(new FileReader("csvnetcracker.csv"))
                 .withCSVParser(parser)

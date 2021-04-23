@@ -4,6 +4,8 @@ package com.netcracker.repository;
 import com.netcracker.contracts.Contract;
 import com.netcracker.utils.sort.Sorter;
 import com.netcracker.utils.reflection.AutoInjectable;
+
+import javax.xml.bind.annotation.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Predicate;
@@ -11,24 +13,30 @@ import java.util.function.Predicate;
 /**
  * public class for creating objects Repository of contracts with special parameters
  */
+@XmlRootElement (name = "repository")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Repository {
 
     /**
      * field contract is an array which contain objects of Contract class
      */
-   private Contract[] contract = new Contract[1];
+    @XmlElementWrapper(name = "repos_contracts")
+    @XmlElement(name = "contract")
+    private Contract[] contract = new Contract[1];
 
     /**
      * Object for performed sorting in repository
      */
     @AutoInjectable
-   private Sorter sorter;
+    @XmlTransient
+    private Sorter sorter;
 
     /**
      * field size contain the size of repository - number of contracts, which contain in it.
-     * Default value is 0
+     * Default value is 1
      */
-   private int size;
+    @XmlTransient
+    private int size;
 
 
     /**

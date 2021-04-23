@@ -2,24 +2,31 @@ package com.netcracker.contracts;
 
 import com.netcracker.person.Person;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 
 /**
  * public class for creating objects of mobile contract with special parameters: number of sms, number of GB, number of minutes
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MobileContract extends Contract {
 
     /**
      * field smsNumber is a number of sms for mobile contract
      */
+    @XmlElement(name = "smsNum")
     private int smsNumber;
     /**
      * field gbNumber is a number of GB for mobile contract
      */
+    @XmlElement(name = "gbNum")
     private int gbNumber;
     /**
      * field minutesNumber is a number of minutes for mobile contract
      */
+    @XmlElement(name = "minNum")
     private int minutesNumber;
 
     /**
@@ -38,6 +45,13 @@ public class MobileContract extends Contract {
         this.smsNumber = smsNumber;
         this.gbNumber = gbNumber;
         this.minutesNumber = minutesNumber;
+    }
+
+    /**
+     * constructor without parameters
+     */
+    public MobileContract() {
+        super();
     }
 
     /**

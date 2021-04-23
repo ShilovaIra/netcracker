@@ -1,35 +1,49 @@
 package com.netcracker.person;
 
+import com.netcracker.utils.jaxb.LocalDateAdapterForXML;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 
 /**
  * public class for creating objects of person with special parameters speedConnection
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Person {
 
     /**
      * field id is an unique identifier for person
      */
+    @XmlElement(name = "id")
     private int id;
     /**
      * field fullName contain full name of person
      */
+    @XmlElement(name = "name")
     private String fullName;
     /**
      * field birthDay contain value of person's birthday
      */
+    @XmlElement(name = "birthday")
+    @XmlJavaTypeAdapter(value = LocalDateAdapterForXML.class)
     private LocalDate birthDay;
     /**
      * field contain value of person's gender
      */
+    @XmlElement(name = "gender")
     private Gender gender;
     /**
      * field contain passport number of person
      */
+    @XmlElement(name = "passportNum")
     private int passportNumber;
     /**
      * field contain series of passport of person
      */
+    @XmlElement(name = "passportSeries")
     private int passportSeries;
 
     /**

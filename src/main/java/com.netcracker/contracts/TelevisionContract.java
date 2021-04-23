@@ -3,16 +3,21 @@ package com.netcracker.contracts;
 
 import com.netcracker.person.Person;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 
 /**
  * public class for creating objects of television contract with special parameter - channel package
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class TelevisionContract extends Contract {
 
     /**
      * field contain enumeration of channel package for Television contract
      */
+    @XmlElement(name = "channelPack")
     private ChannelPackage channelPackage;
 
     /**
@@ -27,6 +32,13 @@ public class TelevisionContract extends Contract {
     public TelevisionContract(int id, LocalDate startingDate, LocalDate endingDate, int contractNumber, Person owner, ChannelPackage channelPackage) {
         super(id,startingDate, endingDate, contractNumber, owner);
         this.channelPackage = channelPackage;
+    }
+
+    /**
+     * constructor without parameters
+     */
+    public TelevisionContract() {
+        super();
     }
 
     /**

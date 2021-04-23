@@ -2,16 +2,21 @@ package com.netcracker.contracts;
 
 import com.netcracker.person.Person;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 
 /**
  * public class for creating objects of Internet contract with special parameters speedConnection
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class InternetContract extends Contract {
 
     /**
      * field contain value of Internet connection for current contract
      */
+    @XmlElement(name = "speedConnection")
     private int speedConnection;
 
     /**
@@ -26,6 +31,13 @@ public class InternetContract extends Contract {
     public InternetContract(int id, LocalDate startingDate, LocalDate endingDate, int contractNumber, Person owner, int speedConnection) {
         super(id,startingDate, endingDate, contractNumber, owner);
         this.speedConnection = speedConnection;
+    }
+
+    /**
+     * constructor without parameters
+     */
+    public InternetContract() {
+        super();
     }
 
     /**

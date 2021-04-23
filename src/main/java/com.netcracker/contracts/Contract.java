@@ -1,37 +1,50 @@
 package com.netcracker.contracts;
 
 import com.netcracker.person.Person;
+import com.netcracker.utils.jaxb.LocalDateAdapterForXML;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 
 /**
  * abstract class Contract with properties id, startingDate, endingDate, contractNumber and owner
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class Contract {
 
     /**
      * field id is an unique identifier for contract
      */
+    @XmlElement(name = "id")
     protected int id;
 
     /**
      * field startingDate it's a date when contract was made
      */
+    @XmlElement(name = "startingDate")
+    @XmlJavaTypeAdapter(value = LocalDateAdapterForXML.class)
     protected LocalDate startingDate;
 
     /**
      * field endingDate - it's a date when contract will finish exist
      */
+    @XmlElement(name = "endingDate")
+    @XmlJavaTypeAdapter(value = LocalDateAdapterForXML.class)
     protected LocalDate endingDate;
 
     /**
      * field contractNumber is a number of contract
      */
+    @XmlElement(name = "contractNumber")
     protected int contractNumber;
 
     /**
      * field owner is entity of contract's owner
      */
+    @XmlElement(name = "owner")
     protected Person owner;
 
     /**
@@ -48,6 +61,12 @@ public abstract class Contract {
         this.endingDate = endingDate;
         this.contractNumber = contractNumber;
         this.owner = owner;
+    }
+
+    /**
+     * constructor without parameters
+     */
+    public Contract() {
     }
 
     /**

@@ -1,5 +1,6 @@
-package com.netcracker.utils.jdbc;
+package netcracker.utils.jdbc;
 
+import com.netcracker.utils.jdbc.JDBCDataLoader;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;

@@ -49,7 +49,7 @@ public class JDBCDataLoader {
     /**
      * List contain the massages with as the result of validation
      */
-    private List<Message> validateMesage;
+    private List<Message> validateMessage;
 
     @AutoInjectable(clazz = Validator.class)
     private List<Validator> validators = new ArrayList<>();
@@ -57,45 +57,45 @@ public class JDBCDataLoader {
     /**
      * Mothod for reading all information from database to repository
      * using validation for correct adding contracts to repository.
-     * @return full repository with information which readed from file
+     * @return full repository with information which reade from file
      * @throws IOException
      */
     public Repository readAll () throws SQLException, ClassNotFoundException {
         jdbcPostgresql.getNewConnection();
         ResultSet resultSet = jdbcPostgresql.getAllDataFromDB();
 
-        int personId = 1;
+
         int lineNumber = 1;
 
         logger.log(Level.INFO, "Data load from file is started.");
 
         while (resultSet.next()) {
 
+            int personId = resultSet.getInt(8);
             person = new Person(personId,
-                    resultSet.getString(5),
-                    resultSet.getDate(6).toLocalDate(),
-                    Gender.valueOf(resultSet.getString(7).toUpperCase()),
-                    resultSet.getInt(8),
-                    resultSet.getInt(9)
+                    resultSet.getString(9),
+                    resultSet.getDate(10).toLocalDate(),
+                    Gender.valueOf(resultSet.getString(11).toUpperCase()),
+                    resultSet.getInt(12),
+                    resultSet.getInt(13)
             );
             personId++;
 
             logger.log(Level.INFO,"Read " + lineNumber + " line from db");
 
-            for (int i = 0; i <personList.size(); i++){
-                if (!(personList.get(i).getFullName().equals(person.getFullName()))) {
-                    personList.add(person);
-                } else {
-                    person.setId(personList.get(i).getId());
-                }
-            }
-
-            if (1 == resultSet.getInt(1)) {
+            if (1 == resultSet.getInt(8)) {
                 personList.add(person);
             }
 
-            String[] addInfo = resultSet.getString(11).split(" ");
-            if (resultSet.getString(10).equals("Mobile Contract")) {
+            for (int i = 0; i <personList.size(); i++) {
+                if (!(personList.get(i).getId() == person.getId())) {
+                    personList.add(person);
+                }
+            }
+
+
+            String[] addInfo = resultSet.getString(6).split(" ");
+            if (resultSet.getString(5).equals("Mobile Contract")) {
                 contract = new MobileContract(resultSet.getInt(1),
                         resultSet.getDate(2).toLocalDate(),
                         resultSet.getDate(3).toLocalDate(),
@@ -105,7 +105,7 @@ public class JDBCDataLoader {
                         Integer.parseInt(addInfo[1]),
                         Integer.parseInt(addInfo[2]));
             }
-            else if (resultSet.getString(10).equals("Internet Contract")) {
+            else if (resultSet.getString(5).equals("Internet Contract")) {
                 contract = new InternetContract(resultSet.getInt(1),
                         resultSet.getDate(2).toLocalDate(),
                         resultSet.getDate(3).toLocalDate(),
@@ -113,7 +113,7 @@ public class JDBCDataLoader {
                         person,
                         Integer.parseInt(addInfo[0]));
             }
-            else if (resultSet.getString(10).equals("Television Contract")) {
+            else if (resultSet.getString(5).equals("Television Contract")) {
                 contract = new TelevisionContract(resultSet.getInt(1),
                         resultSet.getDate(2).toLocalDate(),
                         resultSet.getDate(3).toLocalDate(),
@@ -121,10 +121,10 @@ public class JDBCDataLoader {
                         person,
                         ChannelPackage.valueOf(addInfo[0]));
             }
-            validateMesage = new ArrayList<>();
-            validateMesage = validate(contract, validators);
+            validateMessage = new ArrayList<>();
+            validateMessage = validate(contract, validators);
             int errorCount = 0;
-            for (Message m: validateMesage) {
+            for (Message m: validateMessage) {
                 if (!m.getStatus().equals(Status.OK)) {
                     logger.log(Level.WARNING, m.getComponent());
                     errorCount++;
@@ -141,6 +141,9 @@ public class JDBCDataLoader {
         jdbcPostgresql.closeConnection();
         return repository;
     }
+
+
+
 
     public static List<Message> validate (Contract contract, List<Validator> validatorList) throws ClassNotFoundException {
         List<Message> messages = new ArrayList<>();
